@@ -1,0 +1,39 @@
+name: Deploy Dev
+
+# 트리거: 'dev' 브랜치에 푸시가 발생하면 실행
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Node.js 환경 설정 (버전 20)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 3. 의존성 설치 (Clean Install)
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4. 프로젝트 빌드
+      - name: Build
+        run: npm run build
+
+      # 5. 개발 환경(Dev) 배포 시뮬레이션
+      - name: Deploy to Dev (Simulation)
+        run: |
+          echo "Deploying to DEV Environment..."
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          # 실제 배포 명령어는 여기에 추가 (예: vercel deploy --prod)
+          echo "DEPLOYMENT SUCCESS"
