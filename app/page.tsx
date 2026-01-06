@@ -64,3 +64,4 @@ export default function Home() {
   );
 }
 // Intentional Bug for RC1
+// Bug Fixed for RC2
